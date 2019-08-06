@@ -1,0 +1,4 @@
+State, Optimal Control and Value 
+0 2 0.000000
+1 2 1.521432
+2 1 -2.749957

@@ -1,0 +1,3 @@
+State, Optimal Control and Value 
+0 2 40.000000
+1 1 40.000000

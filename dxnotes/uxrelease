@@ -1,0 +1,134 @@
+#!/usr/bin/env bash
+
+################################################################################
+# @ddblock_begin copyright
+#
+# Copyright (c) 1997-2016
+# Maryland DSPCAD Research Group, The University of Maryland at College Park 
+#
+# Permission is hereby granted, without written agreement and without
+# license or royalty fees, to use, copy, modify, and distribute this
+# software and its documentation for any purpose, provided that the above
+# copyright notice and the following two paragraphs appear in all copies
+# of this software.
+# 
+# IN NO EVENT SHALL THE UNIVERSITY OF MARYLAND BE LIABLE TO ANY PARTY
+# FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES
+# ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF
+# THE UNIVERSITY OF MARYLAND HAS BEEN ADVISED OF THE POSSIBILITY OF
+# SUCH DAMAGE.
+# 
+# THE UNIVERSITY OF MARYLAND SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+# INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE
+# PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE UNIVERSITY OF
+# MARYLAND HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES,
+# ENHANCEMENTS, OR MODIFICATIONS.
+#
+# @ddblock_end copyright
+################################################################################
+
+# Create a distribution version of this package.
+
+
+# Usage: ./uxrelease <item identifier>
+# ./uxrelease 1>out.txt 2>err.txt
+
+# Export definitions to subprocesses (needed for the filter function)
+set -a
+
+function lxdisplay {
+    echo $*
+    echo $* >> "$lxlogfile"
+}
+
+# Define customized filtering for this release. This filter is applied
+# recursively on every directory within the release tree.
+function lx_release_filter {
+    rm -r -f *.bak
+    rm -f *.swp
+    rm -r -f .svn
+
+    # DSPCAD-specific configuration files and utilities that are used for
+    # maintenance of the software and not intended to be included in releases.
+    rm -r -f dscconfig
+    rm -f cprupdate
+    # Clean up any intermediate project files if they exist
+    dlcclean
+    rm -r -f autotest-report
+}
+
+#start#
+lxitem="gembench"
+lxprog=uxrelease
+
+if [ $# -ne 0 ]; then
+    echo $lxprog error: arg count
+    exit 1
+fi
+
+
+#define release-specific settings destination directory
+dxdist_dest="$UXTMP"/dxdist/"$lxitem"
+dxdist_name="$lxitem"
+
+# Set up the log file
+lxlogfile=uxrelease-log.txt
+rm -f "$lxlogfile"
+touch "$lxlogfile"
+lxdisplay uxrelease started on `date`
+
+# Set up the destination directory
+dxpushd "$UXTMP"
+rm -r -f dxdist
+dxvalidate could not remove "$UXTMP"/dxdist
+mkdir dxdist
+cd dxdist
+mkdir "$lxitem"
+dxpopd
+
+# Set up the source directory (root directory for the release)
+lxsource=../../"$lxitem"
+dxpushd .
+cd ..
+lxsource=`pwd`
+dxpopd
+# Create the distribution version. 
+dxdist "$lxsource"/src "$dxdist_dest"/src lx_release_filter
+dxdist "$lxsource"/doc "$dxdist_dest"/doc lx_release_filter
+dxdist "$lxsource"/scripts "$dxdist_dest"/scripts lx_release_filter
+dxdist "$lxsource"/datasets "$dxdist_dest"/datasets lx_release_filter
+# dxdist "$lxsource"/bin "$dxdist_dest"/bin lx_release_filter
+cp "$lxsource"/README.txt "$dxdist_dest"
+lxfile="$dxdist_dest"/README.txt
+echo >> "$lxfile"
+echo Release created on `date` >> "$lxfile"
+
+# Clean up the files (dos to unix format conversion)
+lxdisplay Calling dxdtuf on the entire distribution tree
+dxpushd "$dxdist_dest"
+dxdtut all 2> $UXTMP/uxrelease-dtuf-err.txt 1> $UXTMP/uxrelease-dtuf-out.txt
+dxpopd
+
+# Ensuring that bash files are executable (the permissions may have
+# been changed by preceding operations, such as dxdtuf)
+lxdisplay Ensuring that scripts within the whole tree are executable
+dxpushd "$dxdist_dest"
+# dxmxt ""
+dxpopd
+
+# Output results to the log file
+echo ---------------------------- >> "$lxlogfile"
+echo Contents of $UXTMP/uxrelease-dtuf-err.txt: >> "$lxlogfile"
+cat $UXTMP/uxrelease-dtuf-err.txt >> "$lxlogfile" 
+echo ---------------------------- >> "$lxlogfile"
+echo Contents of $UXTMP/uxrelease-dtuf-out: >> "$lxlogfile"
+cat $UXTMP/uxrelease-dtuf-out.txt >> "$lxlogfile"
+
+# Summarize the status
+lxdisplay $dxdist_name distribution setup is finished: 
+lxdisplay result is in $dxdist_dest
+
+
+
+
