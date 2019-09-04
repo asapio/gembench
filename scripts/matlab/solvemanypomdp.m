@@ -64,8 +64,8 @@ function solvemanypomdp(in_dir_name, out_dir_name)
                 fprintf('Solver time = %d seconds\n', toc());
                 
             catch ME
-                disp(['An error occured while solving POMDP: ', file_name]);
-                rethrow(ME);                
+                fprintf('An error occured while solving POMDP: %s\n', file_name);
+                disp(ME.getReport());
             end
         end
     end
