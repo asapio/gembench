@@ -1,4 +1,29 @@
-function pomdp = readPOMDP(filename,useSparse)
+% -------------------------------------------------------------------------
+% Matthijs Spaan <mtjspaan@science.uva.nl>
+% Copyright (c) 2003 Universiteit van Amsterdam.  All rights reserved.
+% $Id: readPOMDP.m,v 1.11 2003/12/09 17:25:34 mtjspaan Exp $
+
+% This software or any part thereof may only be used for non-commercial  
+% or research purposes, as long as the author and University are         
+% mentioned. Commercial use without explicit prior written consent by    
+% the Universiteit van Amsterdam is strictly prohibited. This copyright  
+% notice must be included with any copy of this software or any part     
+% thereof.                                                               
+%                                                                        
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS    
+% "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT      
+% LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR  
+% A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT   
+% OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  
+% SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT       
+% LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  
+% DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  
+% THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT    
+% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  
+% OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   
+% -------------------------------------------------------------------------
+
+function pomdp = readPOMDP(filename, useSparse)
 % readPOMDP - parser for "Tony's POMDP file format"
 %
 % pomdp = readPOMDP(filename,useSparse)
@@ -60,28 +85,6 @@ function pomdp = readPOMDP(filename,useSparse)
 % [1]
 % http://www.cs.brown.edu/research/ai/pomdp/examples/pomdp-file-spec.html
 % 
-% Matthijs Spaan <mtjspaan@science.uva.nl>
-% Copyright (c) 2003 Universiteit van Amsterdam.  All rights reserved.
-% $Id: readPOMDP.m,v 1.11 2003/12/09 17:25:34 mtjspaan Exp $
-
-% This software or any part thereof may only be used for non-commercial  
-% or research purposes, as long as the author and University are         
-% mentioned. Commercial use without explicit prior written consent by    
-% the Universiteit van Amsterdam is strictly prohibited. This copyright  
-% notice must be included with any copy of this software or any part     
-% thereof.                                                               
-%                                                                        
-% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS    
-% "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT      
-% LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR  
-% A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT   
-% OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,  
-% SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT       
-% LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,  
-% DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  
-% THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT    
-% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  
-% OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   
 
 if nargin<2
   useSparse=0;
