@@ -223,8 +223,10 @@ int  main( int argc, char **argv )
     // ------------------------------
     // Write out results
     // ------------------------------
+    // If the user passed in a filename with the -o argument, save the output to a file
     if (str_output_filename[0] != '\0')
     {
+        // Open the file, and check that we were able to open it
         FILE* fptr = fopen((const char*)str_output_filename, "w");
         if (fptr == NULL)
         {
@@ -232,9 +234,12 @@ int  main( int argc, char **argv )
         }
         else
         {
+            // The first row is a header row describing the columns
             fprintf(fptr, "State, Optimal Control and Value\n");
+            // For each state in the state space
             for (uint32_t n=0; n<p.getNumStates(); n++)
             {
+                // Print one row with the state index, the optimal action, and the value of the state
                 fprintf(fptr, "%d %d %.6f \n", n, out_policy[n], out_value_func[n]);
             }
             fclose(fptr);
