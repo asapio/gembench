@@ -9,7 +9,7 @@ This software package contains MDP datasets, parsers, solvers and reference solu
 
 The following paper details the motivation behind this software and also contains a detailed description of it: 
 
-A. Sapio, R. Tatiefo, S. Bhattacharyya, and M. Wolf. GEMBench: A platform for collaborative development of gpu accelerated embedded markov decision systems. In Proceedings of the International Conference on Embedded Computer Systems: Architectures, Modeling, and Simulation, Samos, Greece, July 2019
+A. Sapio, R. Tatiefo, S. Bhattacharyya, and M. Wolf. GEMBench: A platform for collaborative development of GPU accelerated embedded Markov decision systems. In Proceedings of the International Conference on Embedded Computer Systems: Architectures, Modeling, and Simulation, Samos, Greece, July 2019
 
 ## Software organization:
 
